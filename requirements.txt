@@ -3,3 +3,6 @@ openai
 streamlit
 streamlit-chat
 unstructured
+pdfminer.six
+pinecone-client
+faiss
