@@ -32,7 +32,7 @@ from langchain.vectorstores import Chroma, Pinecone
 from langchain.embeddings.openai import OpenAIEmbeddings
 import pinecone
 
-OPENAI_API_KEY = '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'
+OPENAI_API_KEY = st.secrets["OPENAI_API_KEY"]
 PINECONE_API_KEY = '123deabc-0a96-41b8-b668-77a5e1d0a437'
 PINECONE_API_ENV = 'us-east4-gcp'
 
