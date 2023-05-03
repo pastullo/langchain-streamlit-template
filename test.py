@@ -61,6 +61,7 @@ query = st.text_area("Your question", value="")
 if st.button("Submit"):
     st.write("You asked:", query)
 
+st.write("Resuming execution")
 docs = docsearch.similarity_search(query, include_metadata=True)
 print (f'Found {len(docs)} relevant excerpts.')
 
