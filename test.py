@@ -57,7 +57,9 @@ print (f'{docsearch}')
 
 # query = "What are the Three  Assurances of the cunnilingus?"
 query = st.text_area("Your question", value="")
-st.write(f'Query is: {query}')
+
+if st.button("Submit"):
+    st.write("You asked:", query)
 
 docs = docsearch.similarity_search(query, include_metadata=True)
 print (f'Found {len(docs)} relevant excerpts.')
