@@ -56,10 +56,13 @@ print (f'{docsearch}')
 
 
 # query = "What are the Three  Assurances of the cunnilingus?"
-query = st.text_area("Your question", value="")
+query = st.text_input("Enter some text:")
 
-if st.button("Submit"):
-    st.write("You asked:", query)
+if st.button("Submit") and query != "":
+    st.write("You entered:", query)
+else:
+    st.write("Please enter some text and click 'Submit' to continue")
+    st.stop
 
 st.write("Resuming execution")
 docs = docsearch.similarity_search(query, include_metadata=True)
