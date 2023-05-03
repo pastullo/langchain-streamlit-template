@@ -55,7 +55,8 @@ docsearch = Pinecone.from_texts(
 print (f'{docsearch}')
 
 
-query = "What are the Three  Assurances of the cunnilingus?"
+# query = "What are the Three  Assurances of the cunnilingus?"
+query = st.text_area("Your question", value="")
 st.write(f'Query is: {query}')
 
 docs = docsearch.similarity_search(query, include_metadata=True)
