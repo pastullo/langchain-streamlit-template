@@ -33,9 +33,37 @@ from langchain.embeddings.openai import OpenAIEmbeddings
 import pinecone
 
 OPENAI_API_KEY = st.secrets["OPENAI_API_KEY"]
-PINECONE_API_KEY = '123deabc-0a96-41b8-b668-77a5e1d0a437'
+PINECONE_API_KEY = st.secrets["PINECONE_API_KEY"]
 PINECONE_API_ENV = 'us-east4-gcp'
 
 embeddings = OpenAIEmbeddings(openai_api_key=OPENAI_API_KEY)
 st.write('Embeddings created:')
 st.write(embeddings)
+
+pinecone.init(
+    api_key=PINECONE_API_KEY,  # find at app.pinecone.io
+    environment=PINECONE_API_ENV  # next to api key in console
+)
+index_name = "test-index"
+
+docsearch = Pinecone.from_texts(
+    [t.page_content for t in texts], 
+    embeddings, 
+    index_name=index_name, 
+    metadatas=[{"source": f"{t}-pl"} for t in texts]
+)
+print (f'{docsearch}')
+
+
+query = "What are the Three  Assurances of the cunnilingus?"
+st.write(f'Query is: {query}')
+
+docs = docsearch.similarity_search(query, include_metadata=True)
+print (f'Found {len(docs)} relevant excerpts.')
+
+from langchain.llms import OpenAI
+llm = OpenAI(temperature=0, openai_api_key=OPENAI_API_KEY)
+
+from langchain.chains.question_answering import load_qa_chain
+chain = load_qa_chain(llm, chain_type="stuff")
+chain.run(input_documents=docs, question=query)
